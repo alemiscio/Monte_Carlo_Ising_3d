@@ -1,0 +1,71 @@
+Function Overview: 3D Ising Monte Carlo Simulation (Metropolis Algorithm)
+
+This document describes the functionality of each routine used in a 3D Ising model simulation with Metropolis updates.
+
+Initialization and Visualization
+--------------------------------
+- random_spin_field(N, M, L):
+  Initializes a random spin configuration on a cubic lattice of size N x M x L, where each spin takes the value ±1.
+
+- display_spin_field(field, z):
+  Displays a 2D slice at fixed z from the 3D spin field as a grayscale image.
+
+- display_spin_projection(field, axis):
+  Projects the 3D spin field along the chosen axis by averaging, and returns a grayscale image of the projection.
+
+Ising Model Dynamics
+--------------------
+- _ising_update_3d(field, n, m, l, beta, h):
+  Applies the Metropolis update rule to the spin at position (n, m, l), considering its six nearest neighbors.
+
+- ising_step_3d(field, beta, h):
+  Applies a complete Metropolis sweep of the lattice using a checkerboard-like scheme to update spins without conflicts.
+
+Thermodynamic Observables
+-------------------------
+- magnetization(field):
+  Computes the average magnetization per spin.
+
+- energy_expectation_value_3d(field):
+  Computes the average energy per spin, accounting for double counting of neighbor interactions.
+
+- compute_epsilon_field_3d(field):
+  Calculates the local energy density field ε_i = -s_i * sum of neighboring spins.
+
+Two-Point Correlation Functions
+-------------------------------
+- two_point_correlation_r_connected_3d(field, r, axis):
+  Computes the connected spin–spin two-point function at distance r along a given axis.
+
+- compute_two_point_r_profile_3d(field, r_max, axis):
+  Returns the profile of the connected spin–spin correlator for r = 1 to r_max.
+
+- two_point_correlation_epsilon_r_connected(field, r, axis):
+  Computes the connected energy–energy two-point function.
+
+- compute_two_point_epsilon_profile(field, r_max, axis):
+  Returns the full profile of connected epsilon–epsilon correlators up to distance r_max.
+
+CFT Predictions
+---------------
+- cft_prediction(r_values, A):
+  Returns the conformal field theory prediction for the sigma–sigma two-point function using scaling dimension Delta_sigma = 0.518.
+
+- cft_prediction_epsilon(r_values, A):
+  Returns the CFT prediction for the epsilon–epsilon two-point function using Delta_epsilon = 1.413.
+
+Plotting Functions
+------------------
+- plot_two_point_sigma(field, r_max, i, axis):
+  Plots the spin–spin two-point function from the simulation and compares it to the CFT prediction. Saves the result as a PNG.
+
+- plot_two_point_epsilon(field, r_max, i, axis):
+  Same as above, but for the energy–energy two-point function.
+
+Data I/O Utilities
+------------------
+- export_two_point_data_txt(G, filename):
+  Saves a given two-point function profile to a plain text file.
+
+- save_field_npy(field, filename) / load_field_npy(filename):
+  Save or load the spin field to/from a binary NumPy file.
